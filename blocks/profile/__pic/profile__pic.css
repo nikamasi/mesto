@@ -1,0 +1,6 @@
+.profile__pic {
+  grid-area: pic;
+  border-radius: 50%;
+  width: 120px;
+  object-fit: contain;
+}

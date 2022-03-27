@@ -1,0 +1,7 @@
+.gallery__caption {
+  width: 100%;
+  height: 22%;
+  display: flex;
+  margin: 0 auto;
+  background-color: rgb(255, 255, 255);
+}

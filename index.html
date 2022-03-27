@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./pages/index.css">
+    <title>Mesto</title>
+</head>
+
+<body class="root">
+
+    <header class="header">
+        <a href="#"><img class="header__logo" src="./images/logo.svg" alt="логотип Место Россия"></a>
+    </header>
+
+    <main class="content">
+
+        <section class="profile">
+            <div class="profile__details">
+                <img class="profile__pic" src="./images/profile-pic.jpg"
+                    alt="улыбающийся мучжчина в красной шапке на фоне моря">
+                <h1 class="profile__name">Жак-Ив Кусто</h1>
+
+                <p class="profile__bio">Исследователь океана</p>
+                <button class="profile__edit-button"></button>
+            </div>
+            <button class="profile__add-button"></button>
+        </section>
+
+        <section class="pop-up">
+            <div class="pop-up__container">
+                <button class="pop-up__close-button"></button>
+                <form class="pop-up__form">
+                    <h3 class="pop-up__title">Редактировать профиль</h3>
+                    <input class="pop-up__input" type="text" id="name" value="Жак-Ив Кусто">
+                    <input class="pop-up__input" type="text" id="bio" value="Исследователь океана">
+                    <button class="pop-up__save-button">Сохранить</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="gallery">
+
+            <div class="gallery__item">
+                <img class="gallery__image" src="./images/nice.jpeg"
+                    alt="вытянутый песчаный пляж в городе у лазурного моря">
+                <div class="gallery__caption">
+                    <div class="gallery__caption-content">
+                        <h2 class="gallery__item-name">Ницца</h2>
+                        <button class="gallery__like-button"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery__item">
+                <img class="gallery__image" src="./images/saint-tropez.jpeg"
+                    alt="узкая улочка из брусчатки проходит между старых домов и ведет к морю">
+                <div class="gallery__caption">
+                    <div class="gallery__caption-content">
+                        <h2 class="gallery__item-name">Сан Тропе</h2>
+                        <button class="gallery__like-button"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery__item">
+                <img class="gallery__image" src="./images/treport.jpeg" alt="высокий утес у моря">
+                <div class="gallery__caption">
+                    <div class="gallery__caption-content">
+                        <h2 class="gallery__item-name">Ле-Трепор</h2>
+                        <button class="gallery__like-button"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery__item">
+                <img class="gallery__image" src="./images/red-sea.jpeg"
+                    alt="подводный морской мир, разнообразные рыбы и кораллы">
+                <div class="gallery__caption">
+                    <div class="gallery__caption-content">
+                        <h2 class="gallery__item-name">Красное море</h2>
+                        <button class="gallery__like-button"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery__item">
+                <img class="gallery__image" src="./images/etreta.jpeg"
+                    alt="песчаное побережье и утес с природной аркой у лазурного моря">
+                <div class="gallery__caption">
+                    <div class="gallery__caption-content">
+                        <h2 class="gallery__item-name">Этрета</h2>
+                        <button class="gallery__like-button"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery__item">
+                <img class="gallery__image" src="./images/kortes.jpeg"
+                    alt="небольшие каменные утесы на песчаном берегу и в море">
+                <div class="gallery__caption">
+                    <div class="gallery__caption-content">
+                        <h2 class="gallery__item-name">Море Кортеса</h2>
+                        <button class="gallery__like-button"></button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2020 Mesto Russia</p>
+    </footer>
+
+    <script src="./blocks/pop-up/pop-up.js"></script>
+
+</body>
+
+</html>

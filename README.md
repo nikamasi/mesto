@@ -1,17 +1,14 @@
-# Проект: Место
+# One-page user photo gallery
 
-### Обзор
+A simple photo-gallery page for one user.
 
-* Figma
-* Картинки
+**Technologies**
 
-**Figma**
+* flex-box and grid layouts
+* simple pop-up window with JavaScript for editing profile details
+* media queries, the page is resposnive and adaptive for proper display on resolutions from 320px to 1280px and higher (with breakpoints at 320px, 480px, 768px, 1024px and 1280px)
+* will include the option to "like" photos
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+**Code**
 
-**Картинки**
-
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
-
-Удачи!
+* the project follows [BEM](https://en.bem.info/) class naming convention and file structure organization methodology (Nested)

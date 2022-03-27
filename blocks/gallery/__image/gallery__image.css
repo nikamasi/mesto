@@ -1,0 +1,4 @@
+.gallery__image {
+  object-fit: cover;
+  height: 78%;
+}
