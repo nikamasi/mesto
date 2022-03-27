@@ -12,3 +12,5 @@ A simple photo-gallery page for one user.
 **Code**
 
 * the project follows [BEM](https://en.bem.info/) class naming convention and file structure organization methodology (Nested)
+
+Available on [Github Pages](https://nikamasi.github.io/mesto/).
