@@ -1,4 +1,4 @@
-# One-page user photo gallery
+# One-page photo gallery
 
 A simple photo-gallery page for one user.
 
