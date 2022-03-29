@@ -9,12 +9,8 @@ let formElement = document.querySelector(".pop-up__form")
 let nameInput = document.querySelectorAll(".pop-up__input")[0]
 let bioInput = document.querySelectorAll(".pop-up__input")[1]
 
-function openPopUp() {
-    popUp.classList.add("pop-up_opened");
-}
-
-function closePopUP() {
-    popUp.classList.remove("pop-up_opened");
+function togglePopUp() {
+    popUp.classList.toggle("pop-up_opened");
 }
 
 function formSubmitHandler (evt) {
@@ -22,9 +18,9 @@ function formSubmitHandler (evt) {
     currentName.textContent = nameInput.value
     currentBio.textContent = bioInput.value
     console.log(currentName, currentBio)
-    closePopUP()
+    togglePopUp()
 }
 
-editProfileButton.addEventListener("click", openPopUp);
-closeButton.addEventListener("click", closePopUP);
+editProfileButton.addEventListener("click", togglePopUp);
+closeButton.addEventListener("click", togglePopUp);
 formElement.addEventListener('submit', formSubmitHandler); 
