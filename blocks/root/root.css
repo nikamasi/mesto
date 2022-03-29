@@ -1,6 +1,6 @@
 .root {
   background-color: black;
-  width: 100vw;
+  width: 100%;
   min-width: 320px;
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
