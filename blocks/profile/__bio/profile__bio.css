@@ -7,6 +7,10 @@
   font-size: 18px;
   line-height: 22px;
   align-self: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 300px;
 }
 
 @media screen and (max-width: 479px) {

@@ -4,8 +4,8 @@
   background-position: center;
   background-size: contain;
   border: none;
-  width: 22px;
-  height: 19px;
+  min-width: 22px;
+  min-height: 19px;
   background-color: rgb(255,255,255);
 }
 

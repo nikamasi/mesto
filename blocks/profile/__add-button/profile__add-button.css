@@ -1,6 +1,6 @@
 .profile__add-button {
   grid-area: add;
-  border: solid 2px rgb(255,255,255);
+  border: solid 2px rgb(255, 255, 255);
   width: 150px;
   height: 50px;
   padding: 0;
@@ -14,18 +14,12 @@
   background-color: rgb(0, 0, 0);
 }
 
-.profile__add-button:hover {
-  opacity: 0.6;
-  cursor: pointer;
-}
-
 @media screen and (min-width: 480px) and (max-width: 1023px) {
-    .profile__add-button {
-      width: 15%;
-      height: 40px;
-      
-    }
+  .profile__add-button {
+    width: 15%;
+    height: 40px;
   }
+}
 
 @media screen and (max-width: 480px) {
   .profile__add-button {

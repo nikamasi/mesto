@@ -1,18 +1,18 @@
 .pop-up__container {
-  display: flex;
-  flex-direction: column;
-  width: 510px;
-  margin: 0 auto;
+  width: 430px;
+  margin: 195px auto 0;
+  position: relative;
 }
 
 @media screen and (min-width: 481px) and (max-width: 767px) {
   .pop-up__container {
-    width: 90%;
+    width: 380px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .pop-up__container {
     width: 282px;
+    margin-top: 123px;
   }
 }
