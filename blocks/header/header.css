@@ -3,6 +3,7 @@
     max-width: 880px;
     min-width: 320px;
     border-bottom:  solid 1px #545454;
+    opacity: 0.7;
     box-sizing: border-box;
     padding: 45px 0 35px;
     margin: 0 auto;
