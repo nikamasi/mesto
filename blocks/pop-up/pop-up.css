@@ -7,6 +7,7 @@
   right: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* flex-direction: column; */
   margin: 0 auto;
+  visibility: hidden;
+  opacity: 0;
 }

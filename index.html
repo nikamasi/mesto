@@ -28,61 +28,16 @@
         </section>
 
         <section class="gallery">
-
-            <div class="gallery__item">
-                <img class="gallery__image" src="./images/nice.jpeg"
-                    alt="вытянутый песчаный пляж в городе у лазурного моря">
-                <div class="gallery__caption">
-                    <h2 class="gallery__item-name">Ницца</h2>
-                    <button type="button" class="gallery__like-button"></button>
+            <template id="image-template">
+                <div class="gallery__item">
+                    <img class="gallery__image" src="./images/nice.jpeg" alt="фото">
+                    <div class="gallery__item-remove-button button"></div>
+                    <div class="gallery__caption">
+                        <h2 class="gallery__item-name"></h2>
+                        <button type="button" class="gallery__like-button"></button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="gallery__item">
-                <img class="gallery__image" src="./images/saint-tropez.jpeg"
-                    alt="узкая улочка из брусчатки проходит между старых домов и ведет к морю">
-                <div class="gallery__caption">
-                    <h2 class="gallery__item-name">Сан Тропе</h2>
-                    <button type="button" class="gallery__like-button"></button>
-                </div>
-            </div>
-
-            <div class="gallery__item">
-                <img class="gallery__image" src="./images/treport.jpeg" alt="высокий утес у моря">
-                <div class="gallery__caption">
-                    <h2 class="gallery__item-name">Ле-Трепор</h2>
-                    <button type="button" class="gallery__like-button"></button>
-                </div>
-            </div>
-
-            <div class="gallery__item">
-                <img class="gallery__image" src="./images/red-sea.jpeg"
-                    alt="подводный морской мир, разнообразные рыбы и кораллы">
-                <div class="gallery__caption">
-                    <h2 class="gallery__item-name">Красное море</h2>
-                    <button type="button" class="gallery__like-button"></button>
-                </div>
-            </div>
-
-            <div class="gallery__item">
-                <img class="gallery__image" src="./images/etreta.jpeg"
-                    alt="песчаное побережье и утес с природной аркой у лазурного моря">
-                <div class="gallery__caption">
-                    <h2 class="gallery__item-name">Этрета</h2>
-                    <button type="button" class="gallery__like-button"></button>
-                </div>
-            </div>
-
-            <div class="gallery__item">
-                <img class="gallery__image" src="./images/kortes.jpeg"
-                    alt="небольшие каменные утесы на песчаном берегу и в море">
-                <div class="gallery__caption">
-                    <h2 class="gallery__item-name">Море Кортеса</h2>
-                    <button type="button" class="gallery__like-button"></button>
-                </div>
-            </div>
-
-        </section>
+            </template>
 
     </main>
 
@@ -90,17 +45,42 @@
         <p>© 2020 Mesto Russia</p>
     </footer>
 
-    <section class="pop-up">
+    <section class="pop-up pop-up_profile">
         <div class="pop-up__container">
-            <button type="button" class="pop-up__close-button button"></button>
-            <div class="pop-up__form">
+            <button type="button" class="pop-up__close-button button pop-up__close-button_profile"></button>
+            <div class="pop-up__form pop-up__form_profile">
                 <h3 class="pop-up__title">Редактировать профиль</h3>
-                <form name="name-bio">
+                <form name="name-bio" class="name-bio">
                     <input class="pop-up__input pop-up__input_name" type="text" id="name" name="name">
                     <input class="pop-up__input pop-up__input_bio" type="text" id="bio" name="bio">
                     <button class="pop-up__save-button button" type="submit">Сохранить</button>
                 </form>
             </div>
+        </div>
+    </section>
+
+    <section class="pop-up pop-up_add-image">
+        <div class="pop-up__container">
+            <button type="button" class="pop-up__close-button button pop-up__close-button_image"></button>
+            <div class="pop-up__form pop-up__form_image">
+                <h3 class="pop-up__title">Новое место</h3>
+                <form name="image-form" class="image-form">
+                    <input class="pop-up__input pop-up__input_image-name" type="text" id="image-link" name="image-link"
+                        placeholder="Название">
+                    <input class="pop-up__input pop-up__input_image-link" type="text" id="image-link" name="image-link"
+                        placeholder="Ссылка на картинку">
+                    <button class="pop-up__save-button button" type="submit">Создать</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="pop-up pop-up_image-view">
+        <div class="image-view">
+            <button type="button" class="pop-up__close-button button pop-up__close-button_image-view"></button>
+            <img class="image-view__image" alt="фото">
+            <p class="image-view__name"></p>
+        </div>
         </div>
     </section>
 

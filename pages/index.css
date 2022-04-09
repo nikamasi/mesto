@@ -34,5 +34,10 @@
 @import url("../blocks/gallery/__caption/gallery__caption.css");
 @import url("../blocks/gallery/__like-button/gallery__like-button.css");
 @import url("../blocks/gallery/__like-button/_active/gallery__like-button_active.css");
+@import url("../blocks/gallery/__item-remove-button/gallery__item-remove-button.css");
+
+@import url("../blocks/image-view/image-view.css");
+@import url("../blocks/image-view/__image/image-view__image.css");
+@import url("../blocks/image-view/__name/image-view__name.css");
 
 @import url("../blocks/footer/footer.css");
