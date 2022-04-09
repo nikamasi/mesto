@@ -97,7 +97,7 @@ function createCard(name, link, alt) {
   );
   card
     .querySelector(".gallery__item-remove-button")
-    .addEventListener("click", () => galleryItem.remove());
+    .addEventListener("click", () => card.remove());
   return card;
 }
 
