@@ -27,7 +27,7 @@
             <button type="button" class="profile__add-button button"></button>
         </section>
 
-        <section class="gallery">
+        <section class="gallery" aria-label="Фото галерея">
             <template id="image-template">
                 <div class="gallery__item">
                     <img class="gallery__image" src="./images/nice.jpeg" alt="фото">
@@ -38,6 +38,7 @@
                     </div>
                 </div>
             </template>
+        </section>
 
     </main>
 
@@ -65,7 +66,7 @@
             <div class="pop-up__form pop-up__form_image">
                 <h3 class="pop-up__title">Новое место</h3>
                 <form name="image-form" class="image-form">
-                    <input class="pop-up__input pop-up__input_image-name" type="text" id="image-link" name="image-link"
+                    <input class="pop-up__input pop-up__input_image-name" type="text" id="image-name" name="image-name"
                         placeholder="Название">
                     <input class="pop-up__input pop-up__input_image-link" type="text" id="image-link" name="image-link"
                         placeholder="Ссылка на картинку">
@@ -75,12 +76,11 @@
         </div>
     </section>
 
-    <section class="pop-up pop-up_image-view">
+    <section class="pop-up pop-up_image-view" aria-label="Просмотр фото">
         <div class="image-view">
             <button type="button" class="pop-up__close-button button pop-up__close-button_image-view"></button>
-            <img class="image-view__image" alt="фото">
+            <img class="image-view__image" alt="фото" src="#">
             <p class="image-view__name"></p>
-        </div>
         </div>
     </section>
 
