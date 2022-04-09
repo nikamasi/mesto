@@ -1,7 +1,7 @@
 .pop-up_opened {
   display: block;
   visibility: visible;
-  -webkit-animation: fadeIn 1s;
+  -webkit-animation: fadein 1s;
   animation: fadein 0.5s linear forwards;
 }
 
