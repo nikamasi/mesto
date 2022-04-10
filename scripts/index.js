@@ -101,7 +101,7 @@ function createCard(name, link, alt) {
   return card;
 }
 
-function createGalleryItem(name, link, alt) {
+function createGalleryItem(name, link, alt=name) {
   const galleryItem = createCard(name, link, alt);
   gallery.prepend(galleryItem);
 }
