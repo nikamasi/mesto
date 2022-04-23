@@ -63,8 +63,36 @@ const initialCards = [
 
 // ****** FUNCTION DECLARATIONS ******* //
 
+function togglePopUpEventListeners(popUp) {
+  if (popUp.classList.contains("pop-up_opened")) {
+    document.addEventListener("keydown", (evt) => {
+      if (evt.key === "Escape" && popUp.classList.contains("pop-up_opened")) {
+        togglePopUp(popUp);
+      }
+    });
+    popUp.addEventListener("mousedown", (evt) => {
+      if (evt.target.classList.contains("pop-up_opened")) {
+        togglePopUp(popUp);
+      }
+    });
+  }
+  else {
+    document.removeEventListener("keydown", (evt) => {
+      if (evt.key === "Escape" && popUp.classList.contains("pop-up_opened")) {
+        togglePopUp(popUp);
+      }
+    });
+    popUp.removeEventListener("mousedown", (evt) => {
+      if (evt.target.classList.contains("pop-up_opened")) {
+        togglePopUp(popUp);
+      }
+    });
+  }
+}
+
 function togglePopUp(popUp) {
   popUp.classList.toggle("pop-up_opened");
+  togglePopUpEventListeners(popUp);
 }
 
 function togglePopUpProfile() {
@@ -120,14 +148,6 @@ function openImage(name, link, alt) {
   togglePopUp(popUpImageView);
 }
 
-function addOverlayEventListener(popUp) {
-  popUp.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("pop-up_opened")) {
-      togglePopUp(popUp);
-    }
-  });
-}
-
 // **** FUNCTION CALLS **** //
 
 initialCards.forEach((item) =>
@@ -137,7 +157,9 @@ initialCards.forEach((item) =>
 editProfileButton.addEventListener("click", () =>
   togglePopUpProfile(popUpProfile)
 );
+
 formElementProfile.addEventListener("submit", handleProfileFormSubmit);
+
 closeButtonProfileForm.addEventListener("click", () =>
   togglePopUp(popUpProfile)
 );
@@ -149,15 +171,3 @@ closeButtonImageForm.addEventListener("click", () => togglePopUp(popUpImage));
 closeImageViewButton.addEventListener("click", () =>
   togglePopUp(popUpImageView)
 );
-
-addOverlayEventListener(popUpProfile);
-addOverlayEventListener(popUpImage);
-
-document.addEventListener("keydown", (evt) => {
-  if (
-    evt.key === "Escape" &&
-    popUpProfile.classList.contains("pop-up_opened")
-  ) {
-    togglePopUp(popUpProfile);
-  }
-});

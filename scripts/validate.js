@@ -4,13 +4,13 @@ function hasInvalidInput(inputList) {
   });
 }
 
-function toggleButtonState(inputList, button, inactiveButtonClass) {
+function toggleButtonState(inputList, saveButton, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
-    button.classList.add(inactiveButtonClass);
-    button.disabled = true;
+    saveButton.classList.add(inactiveButtonClass);
+    saveButton.disabled = true;
   } else {
-    button.classList.remove(inactiveButtonClass);
-    button.disabled = false;
+    saveButton.classList.remove(inactiveButtonClass);
+    saveButton.disabled = false;
   }
 }
 
@@ -33,6 +33,7 @@ function setEventListeners(
   errorClass
 ) {
   const saveButton = formElement.querySelector(submitButtonSelector);
+  saveButton.disabled = hasInvalidInput(inputList);
   inputList.forEach((inputElement) => {
     const errorElement = document.getElementById(`${inputElement.id}-error`);
     inputElement.addEventListener("input", (evt) => {
