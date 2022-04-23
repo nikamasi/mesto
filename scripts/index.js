@@ -101,7 +101,7 @@ function createCard(name, link, alt) {
   return card;
 }
 
-function createGalleryItem(name, link, alt=name) {
+function createGalleryItem(name, link, alt = name) {
   const galleryItem = createCard(name, link, alt);
   gallery.prepend(galleryItem);
 }
@@ -118,6 +118,14 @@ function openImage(name, link, alt) {
   image.alt = alt;
   imageName.textContent = name;
   togglePopUp(popUpImageView);
+}
+
+function addOverlayEventListener(popUp) {
+  popUp.addEventListener("mousedown", (evt) => {
+    if (evt.target.classList.contains("pop-up_opened")) {
+      togglePopUp(popUp);
+    }
+  });
 }
 
 // **** FUNCTION CALLS **** //
@@ -141,3 +149,15 @@ closeButtonImageForm.addEventListener("click", () => togglePopUp(popUpImage));
 closeImageViewButton.addEventListener("click", () =>
   togglePopUp(popUpImageView)
 );
+
+addOverlayEventListener(popUpProfile);
+addOverlayEventListener(popUpImage);
+
+document.addEventListener("keydown", (evt) => {
+  if (
+    evt.key === "Escape" &&
+    popUpProfile.classList.contains("pop-up_opened")
+  ) {
+    togglePopUp(popUpProfile);
+  }
+});
