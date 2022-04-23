@@ -33,7 +33,7 @@ function setEventListeners(
   errorClass
 ) {
   const saveButton = formElement.querySelector(submitButtonSelector);
-  saveButton.disabled = hasInvalidInput(inputList);
+  toggleButtonState(inputList, saveButton, inactiveButtonClass);
   inputList.forEach((inputElement) => {
     const errorElement = document.getElementById(`${inputElement.id}-error`);
     inputElement.addEventListener("input", (evt) => {

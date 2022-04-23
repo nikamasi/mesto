@@ -5,18 +5,14 @@ const currentName = document.querySelector(".profile__name");
 const currentBio = document.querySelector(".profile__bio");
 const nameInput = document.querySelector(".pop-up__input_name");
 const bioInput = document.querySelector(".pop-up__input_bio");
-const closeButtonProfileForm = document.querySelector(
-  ".pop-up__close-button_profile"
-);
 
 const addImageButton = document.querySelector(".profile__add-button");
 const popUpImage = document.querySelector(".pop-up_add-image");
 const formElementImage = document.querySelector(".image-form");
 const imageNameInput = document.querySelector(".pop-up__input_image-name");
 const imageLinkInput = document.querySelector(".pop-up__input_image-link");
-const closeButtonImageForm = document.querySelector(
-  ".pop-up__close-button_image"
-);
+
+const saveImageFormButton = popUpImage.querySelector(".pop-up__save-button");
 
 const gallery = document.querySelector(".gallery");
 const imageTemplate = document.querySelector("#image-template").content;
@@ -24,9 +20,6 @@ const imageTemplate = document.querySelector("#image-template").content;
 const popUpImageView = document.querySelector(".pop-up_image-view");
 const image = document.querySelector(".image-view__image");
 const imageName = document.querySelector(".image-view__name");
-const closeImageViewButton = document.querySelector(
-  ".pop-up__close-button_image-view"
-);
 
 const initialCards = [
   {
@@ -63,49 +56,45 @@ const initialCards = [
 
 // ****** FUNCTION DECLARATIONS ******* //
 
-function togglePopUpEventListeners(popUp) {
-  if (popUp.classList.contains("pop-up_opened")) {
-    document.addEventListener("keydown", (evt) => {
-      if (evt.key === "Escape" && popUp.classList.contains("pop-up_opened")) {
-        togglePopUp(popUp);
-      }
-    });
-    popUp.addEventListener("mousedown", (evt) => {
-      if (evt.target.classList.contains("pop-up_opened")) {
-        togglePopUp(popUp);
-      }
-    });
-  }
-  else {
-    document.removeEventListener("keydown", (evt) => {
-      if (evt.key === "Escape" && popUp.classList.contains("pop-up_opened")) {
-        togglePopUp(popUp);
-      }
-    });
-    popUp.removeEventListener("mousedown", (evt) => {
-      if (evt.target.classList.contains("pop-up_opened")) {
-        togglePopUp(popUp);
-      }
-    });
+function closeByEscape(evt) {
+  if (evt.key === "Escape") {
+    const openedPopUp = document.querySelector(".pop-up_opened");
+    closePopUp(openedPopUp);
   }
 }
 
-function togglePopUp(popUp) {
-  popUp.classList.toggle("pop-up_opened");
-  togglePopUpEventListeners(popUp);
+function closeByClick(evt) {
+  if (evt.target.classList.contains("pop-up_opened")) {
+    closePopUp(evt.target);
+  }
+  if (evt.target.classList.contains("pop-up__close-button")) {
+    closePopUp(document.querySelector(".pop-up_opened"));
+  }
 }
 
-function togglePopUpProfile() {
+function openPopUp(popUp) {
+  popUp.classList.add("pop-up_opened");
+  document.addEventListener("keydown", closeByEscape);
+  popUp.addEventListener("mousedown", closeByClick);
+}
+
+function closePopUp(popUp) {
+  popUp.classList.remove("pop-up_opened");
+  document.removeEventListener("keydown", closeByEscape);
+  popUp.removeEventListener("mousedown", closeByClick);
+}
+
+function openPopUpProfile() {
   nameInput.value = currentName.textContent;
   bioInput.value = currentBio.textContent;
-  togglePopUp(popUpProfile);
+  openPopUp(popUpProfile);
 }
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   currentName.textContent = nameInput.value;
   currentBio.textContent = bioInput.value;
-  togglePopUp(popUpProfile);
+  closePopUp(popUpProfile);
 }
 
 function createCard(name, link, alt) {
@@ -138,14 +127,19 @@ function handleImageFormSubmit(evt) {
   evt.preventDefault();
   createGalleryItem(imageNameInput.value, imageLinkInput.value);
   formElementImage.reset();
-  togglePopUp(popUpImage);
+  toggleButtonState(
+    [imageNameInput, imageLinkInput],
+    saveImageFormButton,
+    "pop-up__save-button_disabled"
+  );
+  closePopUp(popUpImage);
 }
 
 function openImage(name, link, alt) {
   image.src = link;
   image.alt = alt;
   imageName.textContent = name;
-  togglePopUp(popUpImageView);
+  openPopUp(popUpImageView);
 }
 
 // **** FUNCTION CALLS **** //
@@ -155,19 +149,11 @@ initialCards.forEach((item) =>
 );
 
 editProfileButton.addEventListener("click", () =>
-  togglePopUpProfile(popUpProfile)
+  openPopUpProfile(popUpProfile)
 );
 
 formElementProfile.addEventListener("submit", handleProfileFormSubmit);
 
-closeButtonProfileForm.addEventListener("click", () =>
-  togglePopUp(popUpProfile)
-);
+addImageButton.addEventListener("click", () => openPopUp(popUpImage));
 
-addImageButton.addEventListener("click", () => togglePopUp(popUpImage));
 formElementImage.addEventListener("submit", handleImageFormSubmit);
-closeButtonImageForm.addEventListener("click", () => togglePopUp(popUpImage));
-
-closeImageViewButton.addEventListener("click", () =>
-  togglePopUp(popUpImageView)
-);
