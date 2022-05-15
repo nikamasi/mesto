@@ -1,3 +1,6 @@
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
 const editProfileButton = document.querySelector(".profile__edit-button");
 const popUpProfile = document.querySelector(".pop-up_profile");
 const formElementProfile = document.querySelector(".name-bio");
@@ -12,14 +15,10 @@ const formElementImage = document.querySelector(".image-form");
 const imageNameInput = document.querySelector(".pop-up__input_image-name");
 const imageLinkInput = document.querySelector(".pop-up__input_image-link");
 
-const saveImageFormButton = popUpImage.querySelector(".pop-up__save-button");
+// const saveImageFormButton = popUpImage.querySelector(".pop-up__save-button");
 
 const gallery = document.querySelector(".gallery");
-const imageTemplate = document.querySelector("#image-template").content;
-
-const popUpImageView = document.querySelector(".pop-up_image-view");
-const image = document.querySelector(".image-view__image");
-const imageName = document.querySelector(".image-view__name");
+const templateSelector = "#image-template";
 
 const initialCards = [
   {
@@ -54,7 +53,7 @@ const initialCards = [
   },
 ];
 
-// ****** FUNCTION DECLARATIONS ******* //
+//    FUNCTION DECLARATIONS    //
 
 function closeByEscape(evt) {
   if (evt.key === "Escape") {
@@ -72,7 +71,7 @@ function closeByClick(evt) {
   }
 }
 
-function openPopUp(popUp) {
+export function openPopUp(popUp) {
   popUp.classList.add("pop-up_opened");
   document.addEventListener("keydown", closeByEscape);
   popUp.addEventListener("mousedown", closeByClick);
@@ -87,7 +86,19 @@ function closePopUp(popUp) {
 function openPopUpProfile() {
   nameInput.value = currentName.textContent;
   bioInput.value = currentBio.textContent;
+  profileFormValidator.resetFormErrors();
   openPopUp(popUpProfile);
+}
+
+function opepPopUpImageForm() {
+  formElementImage.reset();
+  imageFormValidator.resetFormErrors();
+  openPopUp(popUpImage);
+}
+
+function createGalleryItem(templateSelector, name, link, alt = name) {
+  const card = new Card(templateSelector, name, link, (alt = name));
+  gallery.prepend(card.getElement());
 }
 
 function handleProfileFormSubmit(evt) {
@@ -97,63 +108,47 @@ function handleProfileFormSubmit(evt) {
   closePopUp(popUpProfile);
 }
 
-function createCard(name, link, alt) {
-  const card = imageTemplate.querySelector(".gallery__item").cloneNode(true);
-  const image = card.querySelector(".gallery__image");
-  const itemName = card.querySelector(".gallery__item-name");
-  const likeButton = card.querySelector(".gallery__like-button");
-
-  itemName.textContent = name;
-  image.src = link;
-  image.alt = alt;
-
-  image.addEventListener("click", () => openImage(name, link, alt));
-
-  likeButton.addEventListener("click", () =>
-    likeButton.classList.toggle("gallery__like-button_active")
-  );
-  card
-    .querySelector(".gallery__item-remove-button")
-    .addEventListener("click", () => card.remove());
-  return card;
-}
-
-function createGalleryItem(name, link, alt = name) {
-  const galleryItem = createCard(name, link, alt);
-  gallery.prepend(galleryItem);
-}
-
 function handleImageFormSubmit(evt) {
   evt.preventDefault();
-  createGalleryItem(imageNameInput.value, imageLinkInput.value);
-  formElementImage.reset();
-  toggleButtonState(
-    [imageNameInput, imageLinkInput],
-    saveImageFormButton,
-    "pop-up__save-button_disabled"
+  createGalleryItem(
+    templateSelector,
+    imageNameInput.value,
+    imageLinkInput.value
   );
+  formElementImage.reset();
   closePopUp(popUpImage);
 }
 
-function openImage(name, link, alt) {
-  image.src = link;
-  image.alt = alt;
-  imageName.textContent = name;
-  openPopUp(popUpImageView);
-}
+//    FUNCTION CALLS    //
 
-// **** FUNCTION CALLS **** //
+initialCards.forEach((item) => {
+  createGalleryItem(templateSelector, item["name"], item["link"], item["alt"]);
+});
 
-initialCards.forEach((item) =>
-  createGalleryItem(item["name"], item["link"], item["alt"])
+editProfileButton.addEventListener("click", () => openPopUpProfile());
+addImageButton.addEventListener("click", () => opepPopUpImageForm());
+
+//    SETTING UP FORMS    //
+
+const formSettings = {
+  formSelector: ".pop-up__form",
+  inputSelector: ".pop-up__input",
+  submitButtonSelector: ".pop-up__save-button",
+  inactiveButtonClass: "pop-up__save-button_disabled",
+  inputErrorClass: "pop-up__input_invalid",
+  errorClass: "pop-up__error-message_visible",
+  errorMessageSelector: ".pop-up__error-message",
+};
+
+const imageFormValidator = new FormValidator(formSettings, formElementImage);
+imageFormValidator.enableValidation();
+
+const profileFormValidator = new FormValidator(
+  formSettings,
+  formElementProfile
 );
-
-editProfileButton.addEventListener("click", () =>
-  openPopUpProfile(popUpProfile)
-);
+profileFormValidator.enableValidation();
 
 formElementProfile.addEventListener("submit", handleProfileFormSubmit);
-
-addImageButton.addEventListener("click", () => openPopUp(popUpImage));
 
 formElementImage.addEventListener("submit", handleImageFormSubmit);
