@@ -1,5 +1,6 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import { initialCards } from "./data.js";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const popUpProfile = document.querySelector(".pop-up_profile");
@@ -14,44 +15,7 @@ const popUpImage = document.querySelector(".pop-up_add-image");
 const formElementImage = document.querySelector(".image-form");
 const imageNameInput = document.querySelector(".pop-up__input_image-name");
 const imageLinkInput = document.querySelector(".pop-up__input_image-link");
-
-// const saveImageFormButton = popUpImage.querySelector(".pop-up__save-button");
-
 const gallery = document.querySelector(".gallery");
-const templateSelector = "#image-template";
-
-const initialCards = [
-  {
-    name: "Ницца",
-    link: "https://images.unsplash.com/photo-1503696967350-ad1874122058?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-    alt: "вытянутый песчаный пляж в городе у лазурного моря",
-  },
-  {
-    name: "Сен-Тропе",
-    link: "https://images.unsplash.com/photo-1608035057921-3c1e28e812f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-    alt: "узкая улочка из брусчатки проходит между старых домов и ведет к морю",
-  },
-  {
-    name: "Ле-Трепор",
-    link: "https://images.unsplash.com/photo-1552426106-468a47fdd2cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1772&q=80",
-    alt: "высокий утес у моря",
-  },
-  {
-    name: "Красное море",
-    link: "https://images.unsplash.com/photo-1582623838120-455da222cdc7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80",
-    alt: "подводный морской мир, разнообразные рыбы и кораллы",
-  },
-  {
-    name: "Этрета",
-    link: "https://images.unsplash.com/photo-1505753065532-68713e211a3d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-    alt: "песчаное побережье и утес с природной аркой у лазурного моря",
-  },
-  {
-    name: "Море Кортеса",
-    link: "https://images.unsplash.com/photo-1615695478392-af177ac550b9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1774&q=80",
-    alt: "кактусы и лодка у пляжа",
-  },
-];
 
 //    FUNCTION DECLARATIONS    //
 
@@ -96,9 +60,13 @@ function opepPopUpImageForm() {
   openPopUp(popUpImage);
 }
 
-function createGalleryItem(templateSelector, name, link, alt = name) {
-  const card = new Card(templateSelector, name, link, (alt = name));
-  gallery.prepend(card.getElement());
+function createGalleryItem(name, link, alt = name) {
+  const card = new Card("#image-template", name, link, (alt = name));
+  return card.getElement()
+}
+
+function addCardToGallery(cardElement) {
+  gallery.prepend(cardElement);
 }
 
 function handleProfileFormSubmit(evt) {
@@ -110,11 +78,11 @@ function handleProfileFormSubmit(evt) {
 
 function handleImageFormSubmit(evt) {
   evt.preventDefault();
-  createGalleryItem(
-    templateSelector,
+  const newCard = createGalleryItem(
     imageNameInput.value,
     imageLinkInput.value
   );
+  addCardToGallery(newCard)
   formElementImage.reset();
   closePopUp(popUpImage);
 }
@@ -122,7 +90,8 @@ function handleImageFormSubmit(evt) {
 //    FUNCTION CALLS    //
 
 initialCards.forEach((item) => {
-  createGalleryItem(templateSelector, item["name"], item["link"], item["alt"]);
+  const card = createGalleryItem(item["name"], item["link"], item["alt"]);
+  addCardToGallery(card);
 });
 
 editProfileButton.addEventListener("click", () => openPopUpProfile());
@@ -140,7 +109,10 @@ const formSettings = {
   errorMessageSelector: ".pop-up__error-message",
 };
 
-const imageFormValidator = new FormValidator(formSettings, formElementImage);
+const imageFormValidator = new FormValidator(
+  formSettings, 
+  formElementImage
+  );
 imageFormValidator.enableValidation();
 
 const profileFormValidator = new FormValidator(

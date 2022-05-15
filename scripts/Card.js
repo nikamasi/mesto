@@ -6,6 +6,9 @@ export class Card {
     this._name = name;
     this._imageLink = imageLink;
     this._imageAlt = imageAlt;
+    this._imageViewPopUp = document.querySelector(".pop-up_image-view");
+    this._imageInPopUp = document.querySelector(".image-view__image");
+    this._nameInPopUp = document.querySelector(".image-view__name");
   }
 
   _getTemplate() {
@@ -19,23 +22,26 @@ export class Card {
   }
 
   _openImage() {
-    const popUpImageView = document.querySelector(".pop-up_image-view");
-    const image = document.querySelector(".image-view__image");
-    const imageName = document.querySelector(".image-view__name");
-    image.src = this._imageLink;
-    image.alt = this._imageAlt;
-    imageName.textContent = this._name;
-    openPopUp(popUpImageView);
+    this._imageInPopUp.src = this._imageLink;
+    this._imageInPopUp.alt = this._imageAlt;
+    this._nameInPopUp.textContent = this._name;
+    openPopUp(this._imageViewPopUp);
+  }
+
+  _toggleLike() {
+    this._likeButton.classList.toggle("gallery__like-button_active");
+  }
+
+  _removeCard() {
+    this._element.remove();
   }
 
   _setEventListeners() {
     this._image.addEventListener("click", () => this._openImage());
-    this._likeButton.addEventListener("click", () =>
-      this._likeButton.classList.toggle("gallery__like-button_active")
-    );
+    this._likeButton.addEventListener("click", () => this._toggleLike());
     this._element
       .querySelector(".gallery__item-remove-button")
-      .addEventListener("click", () => this._element.remove());
+      .addEventListener("click", () => this._removeCard());
   }
 
   getElement() {
