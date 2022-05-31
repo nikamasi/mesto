@@ -4,21 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
 </head>
 
 <body class="root">
 
     <header class="header">
-        <a href="#"><img class="header__logo" src="./images/logo.svg" alt="логотип Место Россия"></a>
+        <a href="#"><img class="header__logo" src="<%= require('./images/logo.svg')%>" alt="логотип Место Россия"></a>
     </header>
 
     <main class="content">
 
         <section class="profile">
             <div class="profile__details">
-                <img class="profile__pic" src="./images/profile-pic.jpg"
+                <img class="profile__pic" src="<%= require('./images/profile-pic.jpg')%>"
                     alt="улыбающийся мучжчина в красной шапке на фоне моря">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
                 <p class="profile__bio">Исследователь океана</p>
@@ -30,7 +29,7 @@
         <section class="gallery" aria-label="Фото галерея">
             <template id="image-template">
                 <div class="gallery__item">
-                    <img class="gallery__image" src="./images/nice.jpeg" alt="фото">
+                    <img class="gallery__image" src="#" alt="фото">
                     <div class="gallery__item-remove-button button"></div>
                     <div class="gallery__caption">
                         <h2 class="gallery__item-name"></h2>
@@ -89,12 +88,6 @@
             <p class="image-view__name"></p>
         </div>
     </section>
-
-    <script type="module" src="./scripts/index.js"></script>
-    <script type="module" src="./scripts/FormValidator.js"></script>
-    <script type="module" src="./scripts/Card.js"></script>
-    <script type="module" src="./scripts/constants.js"></script>
-    <script type="module" src="./scripts/data.js"></script>
 
 </body>
 

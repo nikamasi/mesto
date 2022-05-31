@@ -1,9 +1,11 @@
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { Section } from "./Section.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { initialCards } from "./data.js";
+import "../pages/index.css"
+
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { Section } from "../components/Section.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { initialCards } from "../components/data.js";
 import {
   formElementProfile,
   formElementImage,
@@ -17,8 +19,8 @@ import {
   addImageButton,
   popupWithImageSelector,
   userInfoSelectors,
-} from "./constants.js";
-import { UserInfo } from "./UserInfo.js";
+} from "../components/constants.js";
+import { UserInfo } from "../components/UserInfo.js";
 
 ///   FORM VALIDATION  
 
