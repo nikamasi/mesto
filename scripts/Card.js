@@ -1,14 +1,10 @@
-import { openPopUp } from "./index.js";
-
 export class Card {
-  constructor(templateSelector, name, imageLink, imageAlt) {
+  constructor(templateSelector, name, imageLink, imageAlt, handleCardClick) {
     this._templateSelector = templateSelector;
     this._name = name;
     this._imageLink = imageLink;
     this._imageAlt = imageAlt;
-    this._imageViewPopUp = document.querySelector(".pop-up_image-view");
-    this._imageInPopUp = document.querySelector(".image-view__image");
-    this._nameInPopUp = document.querySelector(".image-view__name");
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -22,10 +18,12 @@ export class Card {
   }
 
   _openImage() {
-    this._imageInPopUp.src = this._imageLink;
-    this._imageInPopUp.alt = this._imageAlt;
-    this._nameInPopUp.textContent = this._name;
-    openPopUp(this._imageViewPopUp);
+    const imageData = {
+      src: this._imageLink,
+      alt: this._imageAlt,
+      name: this._name,
+    }
+    this._handleCardClick(imageData)
   }
 
   _toggleLike() {
