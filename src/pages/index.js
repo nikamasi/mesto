@@ -5,34 +5,33 @@ import { FormValidator } from "../components/FormValidator.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { Section } from "../components/Section.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
-import { initialCards } from "../components/data.js";
+import { initialCards } from "../utils/data.js";
 import {
-  formElementProfile,
-  formElementImage,
-  formSettings,
-  nameInput,
-  bioInput,
-  popupProfileSelector,
-  popupAddImageSelector,
   gallerySelector,
-  editProfileButton,
-  addImageButton,
-  popupWithImageSelector,
+  formNames,
+  formSettings,
+  popupSelectors,
   userInfoSelectors,
-} from "../components/constants.js";
+  addImageButton,
+  editProfileButton,
+} from "../utils/constants.js";
 import { UserInfo } from "../components/UserInfo.js";
 
 ///   FORM VALIDATION  
 
-const imageFormValidator = new FormValidator(formSettings, formElementImage);
-imageFormValidator.enableValidation();
+const formValidators = {}
 
-const profileFormValidator = new FormValidator(
-  formSettings,
-  formElementProfile
-);
+function enableValidation(formSettings) {
+  const formList = Array.from(document.querySelectorAll(formSettings.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formSettings, formElement);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation()
+  })
+}
 
-profileFormValidator.enableValidation();
+enableValidation(formSettings);
 
 ///   CARDS 
 
@@ -62,32 +61,34 @@ function createGalleryItem(name, link, alt = name) {
 
 ///   POPUPS  
 
+
 const popUpProfile = new PopupWithForm(
-  popupProfileSelector,
-  formElementProfile,
+  popupSelectors.profileForm,
   handleProfileFormSubmit
 );
 
+
 const popUpAddImage = new PopupWithForm(
-  popupAddImageSelector,
-  formElementImage,
+  popupSelectors.addImageForm,
   handleImageFormSubmit
 );
 
-const popupImage = new PopupWithImage(popupWithImageSelector);
+const popupImage = new PopupWithImage(popupSelectors.image);
+
+popUpProfile.setEventListeners()
+popUpAddImage.setEventListeners()
+popupImage.setEventListeners();
 
 const userInfo = new UserInfo(userInfoSelectors);
 
 function openPopUpProfile() {
-  const { name: name, bio: bio } = userInfo.getUserInfo();
-  nameInput.value = name;
-  bioInput.value = bio;
-  openPopUp(popUpProfile, profileFormValidator)
+  const { name, bio } = userInfo.getUserInfo();
+  popUpProfile.setInputValues({name, bio})
+  openPopUp(popUpProfile, formValidators[formNames.profileForm])
 }
 
 function openPopUp(popup, formValidator) {
   formValidator.resetFormErrors()
-  popup.setEventListeners()
   popup.open()
 }
 
@@ -108,9 +109,8 @@ function handleImageFormSubmit(
 }
 
 function handleImageClick({ src: src, alt: alt, name: name }) {
-  popupImage.setEventListeners();
   popupImage.open(src, alt, name);
 }
 
 editProfileButton.addEventListener("click", () => openPopUpProfile());
-addImageButton.addEventListener("click", () => openPopUp(popUpAddImage, imageFormValidator));
+addImageButton.addEventListener("click", () => openPopUp(popUpAddImage, formValidators[formNames.imageForm]));
