@@ -15,10 +15,8 @@ import {
   addImageButton,
   editProfileButton,
   changeProfilePicButton,
-  userName,
-  userAbout,
-  userPic,
 } from "../utils/constants.js";
+import { renderLoading } from "../utils/utils.js";
 import { UserInfo } from "../components/UserInfo.js";
 
 export const api = new API({
@@ -52,24 +50,34 @@ enableValidation(formSettings);
 const userInfo = new UserInfo(userInfoSelectors);
 let userId = "";
 
-function renderUserInfo(data) {
-  userAbout.textContent = data.about;
-  userName.textContent = data.name;
-  userPic.src = data.avatar;
-  userPic.alt = data.alt ? data.alt : data.name;
-}
-
-userInfo
+api
   .getUserInfo()
   .then((data) => {
     userId = data._id;
-    renderUserInfo(data);
+    userInfo.setUserInfo(data.name, data.about, data.avatar, data.alt);
+    getCards();
   })
-  .catch((err) => console.log(err))
-  .finally(() => getCards());
+  .catch((err) => console.log(err));
 
 ///   CARDS
+
 let cardList;
+
+function checkIfLikedBefore(id, userId) {
+  return api
+    .getLikes()
+    .then((data) => {
+      let card = data.find(({ _id }) => _id === id);
+      return card["likes"];
+    })
+    .then((likes) => {
+      const users = [];
+      likes.forEach((like) => {
+        users.push(like["_id"]);
+      });
+      return users.includes(userId) ? true : false;
+    });
+}
 
 function getCards() {
   api
@@ -80,7 +88,7 @@ function getCards() {
           data: data,
           renderer: (item) => {
             const userIsOwner = item["owner"]["_id"] == userId;
-            api.checkIfLikedBefore(item["_id"], userId).then((likedBefore) => {
+            checkIfLikedBefore(item["_id"], userId).then((likedBefore) => {
               const card = createGalleryItem(
                 item["name"],
                 item["link"],
@@ -158,13 +166,9 @@ popupChangePic.setEventListeners();
 /// OPEN POPUPS
 
 function openPopUpProfile() {
-  userInfo
-    .getUserInfo()
-    .then((data) => {
-      popUpProfile.setInputValues(data);
-      openPopUp(popUpProfile, formValidators[formNames.profileForm]);
-    })
-    .catch((err) => console.log(err));
+  const data = userInfo.getUserInfo();
+  popUpProfile.setInputValues(data);
+  openPopUp(popUpProfile, formValidators[formNames.profileForm]);
 }
 
 function openPopUp(popup, formValidator) {
@@ -176,18 +180,15 @@ function openPopUp(popup, formValidator) {
 
 function handleProfileFormSubmit(evt, { name: name, about: about }) {
   evt.preventDefault();
-  popUpProfile.saveButton.textContent = "Сохранение...";
-  userInfo
+  renderLoading(true, popUpProfile.saveButton);
+  api
     .saveUserInfo(name, about)
     .then((data) => {
-      userName.textContent = data.name
-      userAbout.textContent = data.about;
+      userInfo.setUserInfo(data.name, data.about);
+      popUpProfile.close();
     })
     .catch((err) => console.log(err))
-    .finally(() => {
-      popUpProfile.close();
-      popUpProfile.saveButton.textContent = "Сохранить";
-    });
+    .finally(() => renderLoading(false, popUpProfile.saveButton));
 }
 
 function handleImageFormSubmit(
@@ -195,18 +196,16 @@ function handleImageFormSubmit(
   { "image-name": name, "image-link": link }
 ) {
   evt.preventDefault();
-  popupChangePic.saveButton.textContent = "Сохранение...";
+  renderLoading(true, popupChangePic.saveButton);
   api
     .saveImage(name, link)
     .then((data) => {
       const newCard = createGalleryItem(name, link, data._id, 0, true, false);
       cardList.addItem(newCard);
+      popUpAddImage.close();
     })
     .catch((err) => console.log(err))
-    .finally(() => {
-      popUpAddImage.close();
-      popupChangePic.saveButton.textContent = "Сохранить";
-    });
+    .finally(() => renderLoading(false, popupChangePic.saveButton));
 }
 
 function handleDeleteFormSubmit(evt) {
@@ -222,16 +221,14 @@ function handleDeleteFormSubmit(evt) {
 
 function handleChangePicFormSubmit(evt, { "change-pic-link": link }) {
   evt.preventDefault();
-  popupChangePic.saveButton.textContent = "Сохранение...";
+  renderLoading(true, popupChangePic.saveButton);
   api
     .changePic(link)
     .then(() => {
-      userPic.src = link;
-    })
-    .finally(() => {
+      userInfo.setUserPic(link);
       popupChangePic.close();
-      popupChangePic.saveButton.textContent = "Сохранить";
-    });
+    })
+    .finally(() => renderLoading(false, popupChangePic.saveButton));
 }
 
 function handleImageClick({ src: src, alt: alt, name: name }) {
@@ -239,10 +236,12 @@ function handleImageClick({ src: src, alt: alt, name: name }) {
 }
 
 function handleLikeClick(id) {
-  return api
-    .checkIfLikedBefore(id, userId)
+  return checkIfLikedBefore(id, userId)
     .then((likedBefore) => {
-      return likedBefore ? api.unlike(id, userId) : api.like(id, userId)
+      return likedBefore ? api.unlike(id, userId) : api.like(id, userId);
+    })
+    .then((data) => {
+      return data["likes"].length;
     })
     .catch((err) => console.log(err));
 }

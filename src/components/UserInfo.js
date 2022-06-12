@@ -1,21 +1,33 @@
-import { api } from "../pages/index.js";
-
 export class UserInfo {
-  constructor({ name: nameSelector, about: aboutSelector }) {
+  constructor({ name: nameSelector, about: aboutSelector, pic: picSelector }) {
     this._nameElement = document.querySelector(nameSelector);
     this._aboutElement = document.querySelector(aboutSelector);
+    this._picElement = document.querySelector(picSelector)
   }
 
   getUserInfo() {
-    return api.getUserInfo();
+    const data = {
+      name: this._nameElement.textContent,
+      about: this._aboutElement.textContent,
+    };
+    return data
   }
 
-  saveUserInfo(name, about) {
-    return api.saveUserInfo(name, about);
+  setUserInfo(name, about, link, alt) {
+    if (name) {
+      this._nameElement.textContent = name;
+    }
+    if (about) {
+      this._aboutElement.textContent = about;
+    }
+
+    this.setUserPic(link, alt)
   }
 
-  setUserInfo(name, about) {
-    this._nameElement.textContent = name;
-    this._aboutElement.textContent = about;
+  setUserPic(link, alt="фото профиля") {
+    if (link) {
+      this._picElement.src = link
+    }
+    this._picElement.alt = alt
   }
 }
