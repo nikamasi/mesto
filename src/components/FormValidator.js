@@ -52,7 +52,6 @@ export class FormValidator {
     this._toggleButtonState();
     this._inputElements.forEach((inputElement) => {
       const errorElement = document.getElementById(`${inputElement.id}-error`);
-
       inputElement.addEventListener("input", (evt) => {
         if (!inputElement.validity.valid) {
           this._showInputError(

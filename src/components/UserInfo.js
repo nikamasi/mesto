@@ -1,19 +1,21 @@
+import { api } from "../pages/index.js";
+
 export class UserInfo {
-    constructor({name: nameSelector, bio: bioSelector}) {
-        this._nameElement = document.querySelector(nameSelector);
-        this._bioElement = document.querySelector(bioSelector);
-    }
+  constructor({ name: nameSelector, about: aboutSelector }) {
+    this._nameElement = document.querySelector(nameSelector);
+    this._aboutElement = document.querySelector(aboutSelector);
+  }
 
-    getUserInfo() {
-        const data = {
-            name: this._nameElement.textContent,
-            bio: this._bioElement.textContent,
-        }
-        return data
-    }
+  getUserInfo() {
+    return api.getUserInfo();
+  }
 
-    setUserInfo(name, bio) {
-        this._nameElement.textContent = name;
-        this._bioElement.textContent = bio;
-    }
+  saveUserInfo(name, about) {
+    return api.saveUserInfo(name, about);
+  }
+
+  setUserInfo(name, about) {
+    this._nameElement.textContent = name;
+    this._aboutElement.textContent = about;
+  }
 }

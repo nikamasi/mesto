@@ -17,10 +17,13 @@
 
         <section class="profile">
             <div class="profile__details">
+                <div class="profile__pic-element">
                 <img class="profile__pic" src="<%= require('./images/profile-pic.jpg')%>"
-                    alt="улыбающийся мучжчина в красной шапке на фоне моря">
-                <h1 class="profile__name">Жак-Ив Кусто</h1>
-                <p class="profile__bio">Исследователь океана</p>
+                    alt="фото профиля">
+                <button type="button" class="profile__pic-edit-button button"></button>
+                </div>
+                <h1 class="profile__name"></h1>
+                <p class="profile__bio"></p>
                 <button type="button" class="profile__edit-button button"></button>
             </div>
             <button type="button" class="profile__add-button button"></button>
@@ -33,7 +36,10 @@
                     <div class="gallery__item-remove-button button"></div>
                     <div class="gallery__caption">
                         <h2 class="gallery__item-name"></h2>
-                        <button type="button" class="gallery__like-button"></button>
+                        <div class="gallery__likes">
+                            <button type="button" class="gallery__like-button"></button>
+                            <p class="gallery__like-number"></p>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -54,9 +60,24 @@
                     <input class="pop-up__input pop-up__input_name" type="text" id="name" name="name" minlength="2"
                         maxlength="40" required>
                     <span class="pop-up__error-message" id="name-error"></span>
-                    <input class="pop-up__input pop-up__input_bio" type="text" id="bio" name="bio" minlength="2"
+                    <input class="pop-up__input pop-up__input_bio" type="text" id="about" name="about" minlength="2"
                         maxlength="200" required>
                     <span class="pop-up__error-message" id="bio-error"></span>
+                    <button class="pop-up__save-button button" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="pop-up pop-up_change-pic">
+        <div class="pop-up__container">
+            <button type="button" class="pop-up__close-button button pop-up__close-button_change-pic"></button>
+            <div class="pop-up__form pop-up__form_change-pic">
+                <h3 class="pop-up__title">Обновить аватар</h3>
+                <form name="change-pic" class="change-pic form" novalidate>
+                    <input class="pop-up__input pop-up__input_change-pic-link" type="url" id="change-pic-link" name="change-pic-link"
+                        placeholder="Ссылка на картинку" required>
+                    <span class="pop-up__error-message" id="change-pic-link-error"></span>
                     <button class="pop-up__save-button button" type="submit">Сохранить</button>
                 </form>
             </div>
@@ -76,6 +97,18 @@
                         placeholder="Ссылка на картинку" required>
                     <span class="pop-up__error-message" id="image-link-error"></span>
                     <button class="pop-up__save-button button" type="submit">Создать</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="pop-up pop-up_delete-image">
+        <div class="pop-up__container">
+            <button type="button" class="pop-up__close-button button pop-up__close-button_image"></button>
+            <div class="pop-up__form pop-up__form_delete">
+                <h3 class="pop-up__title pop-up__title_delete">Вы уверены?</h3>
+                <form name="image-delete" class="image-delete form" novalidate>
+                    <button class="pop-up__save-button button" type="submit">Да</button>
                 </form>
             </div>
         </div>
